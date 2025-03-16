@@ -69,5 +69,5 @@ If you want to publish your module to the Odoo App Store:
 If you encounter any issues during deployment, please contact:
 
 - **Developer**: Sabry Youssef
-- **Email**: vendorah2@gmail.com
+- **Email**: vetdrughouse@gmail.com
 - **Phone**: +20 1000059085 

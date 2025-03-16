@@ -37,7 +37,7 @@
     'license': 'OPL-1',
     'author': 'Sabry Youssef',
     'website': 'https://www.linkedin.com/in/sabry-youssef/',
-    'support': 'vendorah2@gmail.com',
+    'support': 'vetdrughouse@gmail.com',
     'maintainer': 'Sabry Youssef (Phone: +20 1000059085)',
     'description': """
 Tags Inheritance
