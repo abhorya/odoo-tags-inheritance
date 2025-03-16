@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Tree View Inheritance -->
+    <record id="crm_tag_tree_inherit" model="ir.ui.view">
+        <field name="name">crm.tag.tree.inherit</field>
+        <field name="model">crm.tag</field>
+        <field name="inherit_id" ref="sales_team.sales_team_crm_tag_view_tree"/>
+        <field name="arch" type="xml">
+            <list position="attributes">
+                <attribute name="editable">bottom</attribute>
+            </list>
+            <field name="name" position="after">
+                <field name="tag_type" widget="selection"/>
+            </field>
+        </field>
+    </record>
+
+<!--    &lt;!&ndash; Form View &ndash;&gt;-->
+<!--     &lt;!&ndash; <record id="view_crm_tag_form" model="ir.ui.view">-->
+<!--        <field name="name">crm.tag.form</field>-->
+<!--        <field name="model">crm.tag</field>-->
+<!--        <field name="arch" type="xml">-->
+<!--            <form>-->
+<!--                <sheet>-->
+<!--                    <group>-->
+<!--                        <field name="name"/>-->
+<!--                        <field name="tag_type"/>-->
+<!--                    </group>-->
+<!--                </sheet>-->
+<!--            </form>-->
+<!--        </field>-->
+<!--    </record>-->
+
+    <!-- Action -->
+<!--    <record id="action_crm_tag" model="ir.actions.act_window">-->
+<!--        <field name="name">Tags</field>-->
+<!--        <field name="res_model">crm.tag</field>-->
+<!--        <field name="view_mode">form</field>-->
+<!--        <field name="help" type="html">-->
+<!--            <p class="o_view_nocontent_smiling_face">-->
+<!--                Create a new tag-->
+<!--            </p>-->
+<!--        </field>-->
+<!--    </record>-->
+
+<!--    &lt;!&ndash; Menu Items &ndash;&gt;-->
+<!--    <menuitem-->
+<!--            id="menu_crm_configuration"-->
+<!--            name="Configuration"-->
+<!--            parent="crm.crm_menu_config"-->
+<!--            sequence="50"/>-->
+
+<!--    <menuitem-->
+<!--            id="menu_crm_tags"-->
+<!--            name="Tags"-->
+<!--            parent="menu_crm_configuration"-->
+<!--            action="action_crm_tag"-->
+<!--            sequence="10"/>-->
+</odoo>

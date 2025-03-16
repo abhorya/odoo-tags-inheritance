@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Inherit Form View -->
+    <record id="view_res_users_form_inherit" model="ir.ui.view">
+        <field name="name">res.users.form.inherit</field>
+        <field name="model">res.users</field>
+        <field name="inherit_id" ref="base.view_users_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook" position="inside">
+                <page string="Tag Permissions" name="tag_permissions">
+                    <group>
+                        <field name="allowed_customer_tags" widget="many2many_tags"/>
+                        <field name="allowed_vendor_tags" widget="many2many_tags"/>
+                        <field name="allowed_product_tags" widget="many2many_tags"/>
+                        <field name="allowed_account_tags" widget="many2many_tags"/>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Users Search View -->
+    <record id="view_users_search_inherit" model="ir.ui.view">
+        <field name="name">res.users.search.inherit</field>
+        <field name="model">res.users</field>
+        <field name="inherit_id" ref="base.view_users_search"/>
+        <field name="arch" type="xml">
+            <field name="name" position="after">
+                <field name="allowed_customer_tags"/>
+                <field name="allowed_vendor_tags"/>
+                <field name="allowed_product_tags"/>
+                <field name="allowed_account_tags"/>
+            </field>
+            <search position="inside">
+                <separator/>
+                <filter string="With Customer Tags" name="has_customer_tags" 
+                        domain="[('allowed_customer_tags', '!=', False)]"/>
+                <filter string="With Vendor Tags" name="has_vendor_tags" 
+                        domain="[('allowed_vendor_tags', '!=', False)]"/>
+                <filter string="With Product Tags" name="has_product_tags" 
+                        domain="[('allowed_product_tags', '!=', False)]"/>
+                <filter string="With Account Tags" name="has_account_tags" 
+                        domain="[('allowed_account_tags', '!=', False)]"/>
+                <separator/>
+                <group expand="0" string="Group By Tags">
+                    <filter string="Customer Tags" name="group_customer_tags" 
+                            context="{'group_by': 'allowed_customer_tags'}"/>
+                    <filter string="Vendor Tags" name="group_vendor_tags" 
+                            context="{'group_by': 'allowed_vendor_tags'}"/>
+                    <filter string="Product Tags" name="group_product_tags" 
+                            context="{'group_by': 'allowed_product_tags'}"/>
+                    <filter string="Account Tags" name="group_account_tags" 
+                            context="{'group_by': 'allowed_account_tags'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+</odoo>

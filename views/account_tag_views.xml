@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Tree View -->
+    <record id="view_account_tag_tree_inherit" model="ir.ui.view">
+        <field name="name">account.account.tag.tree.inherit</field>
+        <field name="model">account.account.tag</field>
+        <field name="inherit_id" ref="account.account_tag_view_tree"/>
+        <field name="arch" type="xml">
+            <field name="name" position="after">
+                <field name="tag_type"/>
+                <field name="crm_tag_id"/>
+            </field>
+        </field>
+    </record>
+
+    <!-- Form View Inheritance -->
+    <record id="view_account_tag_form_inherit" model="ir.ui.view">
+        <field name="name">account.account.tag.form.inherit</field>
+        <field name="model">account.account.tag</field>
+        <field name="inherit_id" ref="account.account_tag_view_form"/>
+        <field name="arch" type="xml">
+            <field name="name" position="after">
+                <field name="tag_type"/>
+                <field name="crm_tag_id"/>
+            </field>
+        </field>
+    </record>
+</odoo>

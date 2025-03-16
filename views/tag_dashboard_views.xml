@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Dashboard Kanban View -->
+    <record id="view_tag_dashboard_kanban" model="ir.ui.view">
+        <field name="name">tag.dashboard.kanban</field>
+        <field name="model">crm.tag</field>
+        <field name="arch" type="xml">
+            <kanban create="false" class="oe_background_grey o_kanban_dashboard">
+                <field name="name"/>
+                <field name="tag_type"/>
+                <field name="color"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div t-attf-class="#{kanban_color(record.color.raw_value)}">
+                            <div class="o_kanban_card_header">
+                                <div class="o_kanban_card_header_title">
+                                    <div class="o_primary">
+                                        <field name="name"/>
+                                    </div>
+                                    <div class="o_secondary">
+                                        <field name="tag_type"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="container o_kanban_card_content">
+                                <div class="row">
+                                    <div class="col-6 o_kanban_primary_left">
+                                        <button t-if="record.tag_type.raw_value == 'customer'" 
+                                                class="btn btn-primary" 
+                                                name="action_view_customers" 
+                                                type="object">
+                                            Customers
+                                        </button>
+                                        <button t-if="record.tag_type.raw_value == 'vendor'" 
+                                                class="btn btn-primary" 
+                                                name="action_view_vendors" 
+                                                type="object">
+                                            Vendors
+                                        </button>
+                                        <button t-if="record.tag_type.raw_value == 'product'" 
+                                                class="btn btn-primary" 
+                                                name="action_view_products" 
+                                                type="object">
+                                            Products
+                                        </button>
+                                        <button t-if="record.tag_type.raw_value == 'account'" 
+                                                class="btn btn-primary" 
+                                                name="action_view_accounts" 
+                                                type="object">
+                                            Account Tags
+                                        </button>
+                                    </div>
+                                    <div class="col-6 o_kanban_primary_right">
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <span t-if="record.tag_type.raw_value == 'customer'">
+                                                    <field name="customer_count"/> Customers
+                                                </span>
+                                                <span t-if="record.tag_type.raw_value == 'vendor'">
+                                                    <field name="vendor_count"/> Vendors
+                                                </span>
+                                                <span t-if="record.tag_type.raw_value == 'product'">
+                                                    <field name="product_count"/> Products
+                                                </span>
+                                                <span t-if="record.tag_type.raw_value == 'account'">
+                                                    <field name="account_count"/> Account Tags
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <!-- Dashboard Action -->
+    <record id="action_tag_dashboard" model="ir.actions.act_window">
+        <field name="name">Tag Dashboard</field>
+        <field name="res_model">crm.tag</field>
+        <field name="view_mode">kanban</field>
+        <field name="view_id" ref="view_tag_dashboard_kanban"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                No tags found. Let's create one!
+            </p>
+        </field>
+    </record>
+
+    <!-- Dashboard Menu -->
+    <menuitem id="menu_tag_dashboard"
+              name="Tag Dashboard"
+              parent="crm.crm_menu_config"
+              action="action_tag_dashboard"
+              sequence="1"/>
+</odoo>

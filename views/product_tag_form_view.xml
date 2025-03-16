@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_product_tag_form_inherit" model="ir.ui.view">
+        <field name="name">product.product.tag.form.inherit</field>
+        <field name="model">product.tag</field>
+        <field name="inherit_id" ref="product.product_tag_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//form/sheet/group" position="inside">
+                <field name="crm_tag_id" invisible="1"/>
+                <field name="tag_type"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_product_tag_search" model="ir.ui.view">
+        <field name="name">product.tag.search</field>
+        <field name="model">product.tag</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="crm_tag_id"/>
+                <field name="tag_type"/>
+                <filter string="My allowed Product Tags" name="my_tags"
+                        domain="[('is_allowed_tag', '=', True)]"/>
+                <group expand="0" string="Group By">
+                    <filter string="Company Tag" name="group_by_crm_tag" 
+                            context="{'group_by': 'crm_tag_id'}"/>
+                    <filter string="Tag Type" name="group_by_tag_type" 
+                            context="{'group_by': 'tag_type'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="view_product_tag_tree" model="ir.ui.view">
+        <field name="name">product.tag.tree</field>
+        <field name="model">product.tag</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="crm_tag_id"/>
+                <field name="tag_type"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="action_product_tag" model="ir.actions.act_window">
+        <field name="name">Product Tags</field>
+        <field name="res_model">product.tag</field>
+        <field name="view_mode">tree,form</field>
+        <field name="search_view_id" ref="view_product_tag_search"/>
+        <field name="context">{'search_default_my_tags': 1}</field>
+    </record>
+
+<!--    <menuitem id="menu_product_tags"-->
+<!--              name="Product Tags"-->
+<!--              parent="sales_team.menu_sale_config"-->
+<!--              action="action_product_tag"-->
+<!--              sequence="5"/>-->
+</odoo>

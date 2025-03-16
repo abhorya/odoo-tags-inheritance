@@ -1,0 +1,355 @@
+# Tag-Based Access Control System - Test Scenarios
+### Developed by Sabry Youssef
+
+<div style="background-color: #f8f9fa; padding: 20px; border-radius: 5px; margin-bottom: 20px;">
+  <h2 style="color: #0056b3;">Basic Test Scenario</h2>
+  
+  <h3 style="color: #0056b3;">Setup Phase</h3>
+  
+  <h4>1. Create Tags</h4>
+  <ul>
+    <li><strong>Customer Tags:</strong> "Premium Customers", "Standard Customers"</li>
+    <li><strong>Vendor Tags:</strong> "Preferred Vendors", "International Vendors"</li>
+    <li><strong>Product Tags:</strong> "Electronics", "Office Supplies"</li>
+    <li><strong>Account Tags:</strong> "Revenue Accounts", "Expense Accounts"</li>
+  </ul>
+  
+  <h4>2. Configure Users</h4>
+  <ul>
+    <li><strong>Sales Rep:</strong> allowed_customer_tags = "Premium Customers", allowed_product_tags = "Electronics"</li>
+    <li><strong>Purchasing Agent:</strong> allowed_vendor_tags = "Preferred Vendors", allowed_product_tags = "Office Supplies"</li>
+    <li><strong>Accountant:</strong> allowed_account_tags = "Revenue Accounts", allowed_customer_tags = "Standard Customers"</li>
+    <li><strong>Manager:</strong> Access to all tags</li>
+  </ul>
+  
+  <h4>3. Create Records with Tags</h4>
+  <ul>
+    <li><strong>Customers:</strong> "ABC Corp" (Premium), "XYZ Inc" (Standard)</li>
+    <li><strong>Vendors:</strong> "Supplier A" (Preferred), "Supplier B" (International)</li>
+    <li><strong>Products:</strong> "Laptop" (Electronics), "Paper" (Office Supplies)</li>
+    <li><strong>Account Tags:</strong> "Sales Revenue" (Revenue), "Office Expenses" (Expense)</li>
+  </ul>
+  
+  <h3 style="color: #0056b3;">Testing Phase</h3>
+  
+  <h4>1. Test Tag Counts and Views</h4>
+  <table style="width: 100%; border-collapse: collapse; margin-top: 10px;">
+    <tr style="background-color: #e9ecef;">
+      <th style="padding: 8px; text-align: left; border: 1px solid #dee2e6;">Test</th>
+      <th style="padding: 8px; text-align: left; border: 1px solid #dee2e6;">Expected Result</th>
+      <th style="padding: 8px; text-align: left; border: 1px solid #dee2e6;">Status</th>
+    </tr>
+    <tr>
+      <td style="padding: 8px; text-align: left; border: 1px solid #dee2e6;">Check "Premium Customers" tag count</td>
+      <td style="padding: 8px; text-align: left; border: 1px solid #dee2e6;">customer_count = 1</td>
+      <td style="padding: 8px; text-align: left; border: 1px solid #dee2e6;">□</td>
+    </tr>
+    <tr>
+      <td style="padding: 8px; text-align: left; border: 1px solid #dee2e6;">Click customer count button</td>
+      <td style="padding: 8px; text-align: left; border: 1px solid #dee2e6;">Shows only "ABC Corp"</td>
+      <td style="padding: 8px; text-align: left; border: 1px solid #dee2e6;">□</td>
+    </tr>
+    <tr>
+      <td style="padding: 8px; text-align: left; border: 1px solid #dee2e6;">Check "Preferred Vendors" tag count</td>
+      <td style="padding: 8px; text-align: left; border: 1px solid #dee2e6;">vendor_count = 1</td>
+      <td style="padding: 8px; text-align: left; border: 1px solid #dee2e6;">□</td>
+    </tr>
+    <tr>
+      <td style="padding: 8px; text-align: left; border: 1px solid #dee2e6;">Check "Electronics" tag count</td>
+      <td style="padding: 8px; text-align: left; border: 1px solid #dee2e6;">product_count = 1</td>
+      <td style="padding: 8px; text-align: left; border: 1px solid #dee2e6;">□</td>
+    </tr>
+    <tr>
+      <td style="padding: 8px; text-align: left; border: 1px solid #dee2e6;">Check "Revenue Accounts" tag count</td>
+      <td style="padding: 8px; text-align: left; border: 1px solid #dee2e6;">account_count = 1</td>
+      <td style="padding: 8px; text-align: left; border: 1px solid #dee2e6;">□</td>
+    </tr>
+  </table>
+  
+  <h4>2. Test User Access Control</h4>
+  <table style="width: 100%; border-collapse: collapse; margin-top: 10px;">
+    <tr style="background-color: #e9ecef;">
+      <th style="padding: 8px; text-align: left; border: 1px solid #dee2e6;">User</th>
+      <th style="padding: 8px; text-align: left; border: 1px solid #dee2e6;">Should See</th>
+      <th style="padding: 8px; text-align: left; border: 1px solid #dee2e6;">Should Not See</th>
+      <th style="padding: 8px; text-align: left; border: 1px solid #dee2e6;">Status</th>
+    </tr>
+    <tr>
+      <td style="padding: 8px; text-align: left; border: 1px solid #dee2e6;">Sales Rep</td>
+      <td style="padding: 8px; text-align: left; border: 1px solid #dee2e6;">"ABC Corp", "Laptop"</td>
+      <td style="padding: 8px; text-align: left; border: 1px solid #dee2e6;">"XYZ Inc", "Paper", all vendors, all account tags</td>
+      <td style="padding: 8px; text-align: left; border: 1px solid #dee2e6;">□</td>
+    </tr>
+    <tr>
+      <td style="padding: 8px; text-align: left; border: 1px solid #dee2e6;">Purchasing Agent</td>
+      <td style="padding: 8px; text-align: left; border: 1px solid #dee2e6;">"Supplier A", "Paper"</td>
+      <td style="padding: 8px; text-align: left; border: 1px solid #dee2e6;">"Supplier B", "Laptop", all customers, all account tags</td>
+      <td style="padding: 8px; text-align: left; border: 1px solid #dee2e6;">□</td>
+    </tr>
+    <tr>
+      <td style="padding: 8px; text-align: left; border: 1px solid #dee2e6;">Accountant</td>
+      <td style="padding: 8px; text-align: left; border: 1px solid #dee2e6;">"XYZ Inc", "Sales Revenue"</td>
+      <td style="padding: 8px; text-align: left; border: 1px solid #dee2e6;">"ABC Corp", "Office Expenses", all vendors, all products</td>
+      <td style="padding: 8px; text-align: left; border: 1px solid #dee2e6;">□</td>
+    </tr>
+    <tr>
+      <td style="padding: 8px; text-align: left; border: 1px solid #dee2e6;">Manager</td>
+      <td style="padding: 8px; text-align: left; border: 1px solid #dee2e6;">All records</td>
+      <td style="padding: 8px; text-align: left; border: 1px solid #dee2e6;">None</td>
+      <td style="padding: 8px; text-align: left; border: 1px solid #dee2e6;">□</td>
+    </tr>
+  </table>
+  
+  <h4>3. Test Search Functions</h4>
+  <table style="width: 100%; border-collapse: collapse; margin-top: 10px;">
+    <tr style="background-color: #e9ecef;">
+      <th style="padding: 8px; text-align: left; border: 1px solid #dee2e6;">Test</th>
+      <th style="padding: 8px; text-align: left; border: 1px solid #dee2e6;">Expected Result</th>
+      <th style="padding: 8px; text-align: left; border: 1px solid #dee2e6;">Status</th>
+    </tr>
+    <tr>
+      <td style="padding: 8px; text-align: left; border: 1px solid #dee2e6;">Search customers with has_my_customer_tag = True (as Sales Rep)</td>
+      <td style="padding: 8px; text-align: left; border: 1px solid #dee2e6;">Only "ABC Corp" appears</td>
+      <td style="padding: 8px; text-align: left; border: 1px solid #dee2e6;">□</td>
+    </tr>
+    <tr>
+      <td style="padding: 8px; text-align: left; border: 1px solid #dee2e6;">Search vendors with has_my_vendor_tag = True (as Purchasing Agent)</td>
+      <td style="padding: 8px; text-align: left; border: 1px solid #dee2e6;">Only "Supplier A" appears</td>
+      <td style="padding: 8px; text-align: left; border: 1px solid #dee2e6;">□</td>
+    </tr>
+    <tr>
+      <td style="padding: 8px; text-align: left; border: 1px solid #dee2e6;">Search products with has_my_product_tag = True (as Sales Rep)</td>
+      <td style="padding: 8px; text-align: left; border: 1px solid #dee2e6;">Only "Laptop" appears</td>
+      <td style="padding: 8px; text-align: left; border: 1px solid #dee2e6;">□</td>
+    </tr>
+    <tr>
+      <td style="padding: 8px; text-align: left; border: 1px solid #dee2e6;">Search account tags with is_allowed_tag = True (as Accountant)</td>
+      <td style="padding: 8px; text-align: left; border: 1px solid #dee2e6;">Only "Sales Revenue" appears</td>
+      <td style="padding: 8px; text-align: left; border: 1px solid #dee2e6;">□</td>
+    </tr>
+  </table>
+</div>
+
+<div style="background-color: #f8f9fa; padding: 20px; border-radius: 5px;">
+  <h2 style="color: #0056b3;">Multi-Company Test Scenario</h2>
+  
+  <h3 style="color: #0056b3;">Setup Phase</h3>
+  
+  <h4>1. Create Companies</h4>
+  <ul>
+    <li>Company A (main)</li>
+    <li>Company B</li>
+  </ul>
+  
+  <h4>2. Configure Company-Specific Tags</h4>
+  <table style="width: 100%; border-collapse: collapse; margin-top: 10px;">
+    <tr style="background-color: #e9ecef;">
+      <th style="padding: 8px; text-align: left; border: 1px solid #dee2e6;">Tag Name</th>
+      <th style="padding: 8px; text-align: left; border: 1px solid #dee2e6;">Tag Type</th>
+      <th style="padding: 8px; text-align: left; border: 1px solid #dee2e6;">Company</th>
+    </tr>
+    <tr>
+      <td style="padding: 8px; text-align: left; border: 1px solid #dee2e6;">Company A Premium</td>
+      <td style="padding: 8px; text-align: left; border: 1px solid #dee2e6;">customer</td>
+      <td style="padding: 8px; text-align: left; border: 1px solid #dee2e6;">Company A</td>
+    </tr>
+    <tr>
+      <td style="padding: 8px; text-align: left; border: 1px solid #dee2e6;">Company B Premium</td>
+      <td style="padding: 8px; text-align: left; border: 1px solid #dee2e6;">customer</td>
+      <td style="padding: 8px; text-align: left; border: 1px solid #dee2e6;">Company B</td>
+    </tr>
+    <tr>
+      <td style="padding: 8px; text-align: left; border: 1px solid #dee2e6;">Company A Vendors</td>
+      <td style="padding: 8px; text-align: left; border: 1px solid #dee2e6;">vendor</td>
+      <td style="padding: 8px; text-align: left; border: 1px solid #dee2e6;">Company A</td>
+    </tr>
+    <tr>
+      <td style="padding: 8px; text-align: left; border: 1px solid #dee2e6;">Company B Vendors</td>
+      <td style="padding: 8px; text-align: left; border: 1px solid #dee2e6;">vendor</td>
+      <td style="padding: 8px; text-align: left; border: 1px solid #dee2e6;">Company B</td>
+    </tr>
+    <tr>
+      <td style="padding: 8px; text-align: left; border: 1px solid #dee2e6;">Company A Products</td>
+      <td style="padding: 8px; text-align: left; border: 1px solid #dee2e6;">product</td>
+      <td style="padding: 8px; text-align: left; border: 1px solid #dee2e6;">Company A</td>
+    </tr>
+    <tr>
+      <td style="padding: 8px; text-align: left; border: 1px solid #dee2e6;">Company B Products</td>
+      <td style="padding: 8px; text-align: left; border: 1px solid #dee2e6;">product</td>
+      <td style="padding: 8px; text-align: left; border: 1px solid #dee2e6;">Company B</td>
+    </tr>
+    <tr>
+      <td style="padding: 8px; text-align: left; border: 1px solid #dee2e6;">Company A Accounts</td>
+      <td style="padding: 8px; text-align: left; border: 1px solid #dee2e6;">account</td>
+      <td style="padding: 8px; text-align: left; border: 1px solid #dee2e6;">Company A</td>
+    </tr>
+    <tr>
+      <td style="padding: 8px; text-align: left; border: 1px solid #dee2e6;">Company B Accounts</td>
+      <td style="padding: 8px; text-align: left; border: 1px solid #dee2e6;">account</td>
+      <td style="padding: 8px; text-align: left; border: 1px solid #dee2e6;">Company B</td>
+    </tr>
+  </table>
+  
+  <h4>3. Configure Multi-Company Users</h4>
+  <table style="width: 100%; border-collapse: collapse; margin-top: 10px;">
+    <tr style="background-color: #e9ecef;">
+      <th style="padding: 8px; text-align: left; border: 1px solid #dee2e6;">User</th>
+      <th style="padding: 8px; text-align: left; border: 1px solid #dee2e6;">Companies</th>
+      <th style="padding: 8px; text-align: left; border: 1px solid #dee2e6;">Allowed Tags</th>
+    </tr>
+    <tr>
+      <td style="padding: 8px; text-align: left; border: 1px solid #dee2e6;">Company A User</td>
+      <td style="padding: 8px; text-align: left; border: 1px solid #dee2e6;">Company A only</td>
+      <td style="padding: 8px; text-align: left; border: 1px solid #dee2e6;">Company A Premium, Company A Vendors, Company A Products, Company A Accounts</td>
+    </tr>
+    <tr>
+      <td style="padding: 8px; text-align: left; border: 1px solid #dee2e6;">Multi-Company User</td>
+      <td style="padding: 8px; text-align: left; border: 1px solid #dee2e6;">Company A and B</td>
+      <td style="padding: 8px; text-align: left; border: 1px solid #dee2e6;">All Company A and B tags</td>
+    </tr>
+  </table>
+  
+  <h4>4. Create Company-Specific Records</h4>
+  <table style="width: 100%; border-collapse: collapse; margin-top: 10px;">
+    <tr style="background-color: #e9ecef;">
+      <th style="padding: 8px; text-align: left; border: 1px solid #dee2e6;">Record</th>
+      <th style="padding: 8px; text-align: left; border: 1px solid #dee2e6;">Company</th>
+      <th style="padding: 8px; text-align: left; border: 1px solid #dee2e6;">Tag</th>
+    </tr>
+    <tr>
+      <td style="padding: 8px; text-align: left; border: 1px solid #dee2e6;">Customer A</td>
+      <td style="padding: 8px; text-align: left; border: 1px solid #dee2e6;">Company A</td>
+      <td style="padding: 8px; text-align: left; border: 1px solid #dee2e6;">Company A Premium</td>
+    </tr>
+    <tr>
+      <td style="padding: 8px; text-align: left; border: 1px solid #dee2e6;">Customer B</td>
+      <td style="padding: 8px; text-align: left; border: 1px solid #dee2e6;">Company B</td>
+      <td style="padding: 8px; text-align: left; border: 1px solid #dee2e6;">Company B Premium</td>
+    </tr>
+    <tr>
+      <td style="padding: 8px; text-align: left; border: 1px solid #dee2e6;">Vendor A</td>
+      <td style="padding: 8px; text-align: left; border: 1px solid #dee2e6;">Company A</td>
+      <td style="padding: 8px; text-align: left; border: 1px solid #dee2e6;">Company A Vendors</td>
+    </tr>
+    <tr>
+      <td style="padding: 8px; text-align: left; border: 1px solid #dee2e6;">Vendor B</td>
+      <td style="padding: 8px; text-align: left; border: 1px solid #dee2e6;">Company B</td>
+      <td style="padding: 8px; text-align: left; border: 1px solid #dee2e6;">Company B Vendors</td>
+    </tr>
+    <tr>
+      <td style="padding: 8px; text-align: left; border: 1px solid #dee2e6;">Product A</td>
+      <td style="padding: 8px; text-align: left; border: 1px solid #dee2e6;">Company A</td>
+      <td style="padding: 8px; text-align: left; border: 1px solid #dee2e6;">Company A Products</td>
+    </tr>
+    <tr>
+      <td style="padding: 8px; text-align: left; border: 1px solid #dee2e6;">Product B</td>
+      <td style="padding: 8px; text-align: left; border: 1px solid #dee2e6;">Company B</td>
+      <td style="padding: 8px; text-align: left; border: 1px solid #dee2e6;">Company B Products</td>
+    </tr>
+  </table>
+  
+  <h3 style="color: #0056b3;">Testing Phase</h3>
+  
+  <h4>1. Test Company-Specific Tag Visibility</h4>
+  <table style="width: 100%; border-collapse: collapse; margin-top: 10px;">
+    <tr style="background-color: #e9ecef;">
+      <th style="padding: 8px; text-align: left; border: 1px solid #dee2e6;">Test</th>
+      <th style="padding: 8px; text-align: left; border: 1px solid #dee2e6;">Expected Result</th>
+      <th style="padding: 8px; text-align: left; border: 1px solid #dee2e6;">Status</th>
+    </tr>
+    <tr>
+      <td style="padding: 8px; text-align: left; border: 1px solid #dee2e6;">Login as Company A User and check visible tags</td>
+      <td style="padding: 8px; text-align: left; border: 1px solid #dee2e6;">Can only see Company A tags</td>
+      <td style="padding: 8px; text-align: left; border: 1px solid #dee2e6;">□</td>
+    </tr>
+    <tr>
+      <td style="padding: 8px; text-align: left; border: 1px solid #dee2e6;">Login as Multi-Company User and check visible tags</td>
+      <td style="padding: 8px; text-align: left; border: 1px solid #dee2e6;">Can see both Company A and B tags</td>
+      <td style="padding: 8px; text-align: left; border: 1px solid #dee2e6;">□</td>
+    </tr>
+  </table>
+  
+  <h4>2. Test Company-Specific Record Visibility</h4>
+  <table style="width: 100%; border-collapse: collapse; margin-top: 10px;">
+    <tr style="background-color: #e9ecef;">
+      <th style="padding: 8px; text-align: left; border: 1px solid #dee2e6;">Test</th>
+      <th style="padding: 8px; text-align: left; border: 1px solid #dee2e6;">Expected Result</th>
+      <th style="padding: 8px; text-align: left; border: 1px solid #dee2e6;">Status</th>
+    </tr>
+    <tr>
+      <td style="padding: 8px; text-align: left; border: 1px solid #dee2e6;">Login as Company A User and check visible records</td>
+      <td style="padding: 8px; text-align: left; border: 1px solid #dee2e6;">Can see Customer A, Vendor A, Product A; Cannot see Company B records</td>
+      <td style="padding: 8px; text-align: left; border: 1px solid #dee2e6;">□</td>
+    </tr>
+    <tr>
+      <td style="padding: 8px; text-align: left; border: 1px solid #dee2e6;">Login as Multi-Company User in Company A context</td>
+      <td style="padding: 8px; text-align: left; border: 1px solid #dee2e6;">Can see Company A records; Cannot see Company B records</td>
+      <td style="padding: 8px; text-align: left; border: 1px solid #dee2e6;">□</td>
+    </tr>
+    <tr>
+      <td style="padding: 8px; text-align: left; border: 1px solid #dee2e6;">Switch Multi-Company User to Company B context</td>
+      <td style="padding: 8px; text-align: left; border: 1px solid #dee2e6;">Can see Company B records; Cannot see Company A records</td>
+      <td style="padding: 8px; text-align: left; border: 1px solid #dee2e6;">□</td>
+    </tr>
+  </table>
+  
+  <h4>3. Test Cross-Company Operations</h4>
+  <table style="width: 100%; border-collapse: collapse; margin-top: 10px;">
+    <tr style="background-color: #e9ecef;">
+      <th style="padding: 8px; text-align: left; border: 1px solid #dee2e6;">Test</th>
+      <th style="padding: 8px; text-align: left; border: 1px solid #dee2e6;">Expected Result</th>
+      <th style="padding: 8px; text-align: left; border: 1px solid #dee2e6;">Status</th>
+    </tr>
+    <tr>
+      <td style="padding: 8px; text-align: left; border: 1px solid #dee2e6;">Try to assign Company B tag to Company A record</td>
+      <td style="padding: 8px; text-align: left; border: 1px solid #dee2e6;">Should fail or show warning</td>
+      <td style="padding: 8px; text-align: left; border: 1px solid #dee2e6;">□</td>
+    </tr>
+    <tr>
+      <td style="padding: 8px; text-align: left; border: 1px solid #dee2e6;">Try to create record with wrong company tag</td>
+      <td style="padding: 8px; text-align: left; border: 1px solid #dee2e6;">Should fail or show warning</td>
+      <td style="padding: 8px; text-align: left; border: 1px solid #dee2e6;">□</td>
+    </tr>
+  </table>
+</div>
+
+<div style="background-color: #e9f7ef; padding: 20px; border-radius: 5px; margin-top: 20px;">
+  <h2 style="color: #2e7d32;">Edge Case Tests</h2>
+  
+  <table style="width: 100%; border-collapse: collapse; margin-top: 10px;">
+    <tr style="background-color: #c8e6c9;">
+      <th style="padding: 8px; text-align: left; border: 1px solid #a5d6a7;">Test Case</th>
+      <th style="padding: 8px; text-align: left; border: 1px solid #a5d6a7;">Expected Result</th>
+      <th style="padding: 8px; text-align: left; border: 1px solid #a5d6a7;">Status</th>
+    </tr>
+    <tr>
+      <td style="padding: 8px; text-align: left; border: 1px solid #a5d6a7;">Create record with no tag</td>
+      <td style="padding: 8px; text-align: left; border: 1px solid #a5d6a7;">All users should be able to see it</td>
+      <td style="padding: 8px; text-align: left; border: 1px solid #a5d6a7;">□</td>
+    </tr>
+    <tr>
+      <td style="padding: 8px; text-align: left; border: 1px solid #a5d6a7;">Change tag on existing record</td>
+      <td style="padding: 8px; text-align: left; border: 1px solid #a5d6a7;">Visibility should update accordingly</td>
+      <td style="padding: 8px; text-align: left; border: 1px solid #a5d6a7;">□</td>
+    </tr>
+    <tr>
+      <td style="padding: 8px; text-align: left; border: 1px solid #a5d6a7;">Change user's allowed tags</td>
+      <td style="padding: 8px; text-align: left; border: 1px solid #a5d6a7;">Record visibility should update immediately</td>
+      <td style="padding: 8px; text-align: left; border: 1px solid #a5d6a7;">□</td>
+    </tr>
+    <tr>
+      <td style="padding: 8px; text-align: left; border: 1px solid #a5d6a7;">Create many tags (100+)</td>
+      <td style="padding: 8px; text-align: left; border: 1px solid #a5d6a7;">System should handle large number of tags</td>
+      <td style="padding: 8px; text-align: left; border: 1px solid #a5d6a7;">□</td>
+    </tr>
+  </table>
+</div>
+
+<div style="background-color: #fff3e0; padding: 20px; border-radius: 5px; margin-top: 20px; text-align: center;">
+  <h2 style="color: #e65100;">Module Information</h2>
+  <p style="font-size: 18px;">Tag-Based Access Control System</p>
+  <p style="font-size: 16px;">Developed by: <strong>Sabry Youssef</strong></p>
+  <p>This module provides a comprehensive tag-based access control system for Odoo, allowing fine-grained permissions based on tags assigned to records and users.</p>
+  <p>The system supports multi-company environments and provides security at the record level.</p>
+  <p style="font-style: italic; margin-top: 20px;">© 2025 Sabry Youssef - All Rights Reserved</p>
+</div>
