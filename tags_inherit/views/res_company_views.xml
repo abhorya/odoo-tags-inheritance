@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Inherit Company Form View -->
+    <record id="view_company_form_inherit_tags" model="ir.ui.view">
+        <field name="name">res.company.form.inherit.tags</field>
+        <field name="model">res.company</field>
+        <field name="inherit_id" ref="base.view_company_form"/>
+        <field name="arch" type="xml">
+            <notebook position="inside">
+                <page string="Tag Management" name="tag_management">
+                    <group>
+                        <group string="Customer and Vendor Tags">
+                            <field name="allowed_customer_tags" widget="many2many_tags" options="{'color_field': 'color'}"/>
+                            <field name="allowed_vendor_tags" widget="many2many_tags" options="{'color_field': 'color'}"/>
+                        </group>
+                        <group string="Product and Account Tags">
+                            <field name="allowed_product_tags" widget="many2many_tags" options="{'color_field': 'color'}"/>
+                            <field name="allowed_account_tags" widget="many2many_tags" options="{'color_field': 'color'}"/>
+                        </group>
+                    </group>
+                </page>
+            </notebook>
+        </field>
+    </record>
+
+    <!-- Inherit Company Tree View -->
+    <record id="view_company_tree_inherit_tags" model="ir.ui.view">
+        <field name="name">res.company.tree.inherit.tags</field>
+        <field name="model">res.company</field>
+        <field name="inherit_id" ref="base.view_company_tree"/>
+        <field name="arch" type="xml">
+            <field name="name" position="after">
+                <field name="allowed_customer_tags" widget="many2many_tags" options="{'color_field': 'color'}" optional="show"/>
+                <field name="allowed_vendor_tags" widget="many2many_tags" options="{'color_field': 'color'}" optional="show"/>
+                <field name="allowed_product_tags" widget="many2many_tags" options="{'color_field': 'color'}" optional="hide"/>
+                <field name="allowed_account_tags" widget="many2many_tags" options="{'color_field': 'color'}" optional="hide"/>
+            </field>
+        </field>
+    </record>
+
+    <!-- Company Search View -->
+    <record id="view_company_search_tags" model="ir.ui.view">
+        <field name="name">res.company.search.tags</field>
+        <field name="model">res.company</field>
+        <field name="mode">primary</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="allowed_customer_tags"/>
+                <field name="allowed_vendor_tags"/>
+                <field name="allowed_product_tags"/>
+                <field name="allowed_account_tags"/>
+                <filter name="has_customer_tags" string="With Customer Tags" domain="[('allowed_customer_tags', '!=', False)]"/>
+                <filter name="has_vendor_tags" string="With Vendor Tags" domain="[('allowed_vendor_tags', '!=', False)]"/>
+                <filter name="has_product_tags" string="With Product Tags" domain="[('allowed_product_tags', '!=', False)]"/>
+                <filter name="has_account_tags" string="With Account Tags" domain="[('allowed_account_tags', '!=', False)]"/>
+                <group expand="0" string="Group By">
+                    <filter name="group_customer_tags" string="Customer Tags" context="{'group_by': 'allowed_customer_tags'}"/>
+                    <filter name="group_vendor_tags" string="Vendor Tags" context="{'group_by': 'allowed_vendor_tags'}"/>
+                    <filter name="group_product_tags" string="Product Tags" context="{'group_by': 'allowed_product_tags'}"/>
+                    <filter name="group_account_tags" string="Account Tags" context="{'group_by': 'allowed_account_tags'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- Company Action with Search View -->
+    <record id="action_company_tags" model="ir.actions.act_window">
+        <field name="name">Companies</field>
+        <field name="res_model">res.company</field>
+        <field name="view_mode">tree,form</field>
+        <field name="search_view_id" ref="view_company_search_tags"/>
+    </record>
+</odoo> 

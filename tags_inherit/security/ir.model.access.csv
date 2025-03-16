@@ -6,6 +6,6 @@ access_res_partner_manager,access.res.partner.manager,model_res_partner,sales_te
 access_product_template_user,access.product.template.user,model_product_template,base.group_user,1,1,1,0
 access_product_template_manager,access.product.template.manager,model_product_template,sales_team.group_sale_manager,1,1,1,1
 access_res_users_user,access.res.users.user,model_res_users,base.group_user,1,0,0,0
-access_res_users_manager,access.res.users.manager,model_res_users,base.group_erp_manager,1,1,1,1
+access_res_users_admin,access.res.users.admin,model_res_users,base.group_system,1,1,1,1
 access_account_account_tag_user,access.account.account.tag.user,model_account_account_tag,base.group_user,1,1,1,0
 access_account_account_tag_manager,access.account.account.tag.manager,model_account_account_tag,sales_team.group_sale_manager,1,1,1,1

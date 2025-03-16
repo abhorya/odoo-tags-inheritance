@@ -271,3 +271,35 @@ class AccountTagInherit(models.Model):
                 '|', ('company_id', '=', False), ('company_id', '=', self.company_id.id)
             ],
         }
+
+class ResCompanyInherit(models.Model):
+    _inherit = 'res.company'
+
+    allowed_customer_tags = fields.Many2many(
+        'crm.tag',
+        'res_company_customer_tag_rel',
+        'company_id', 'tag_id',
+        string='Allowed Customer Tags',
+        domain="[('tag_type', '=', 'customer')]"
+    )
+    allowed_vendor_tags = fields.Many2many(
+        'crm.tag',
+        'res_company_vendor_tag_rel',
+        'company_id', 'tag_id',
+        string='Allowed Vendor Tags',
+        domain="[('tag_type', '=', 'vendor')]"
+    )
+    allowed_product_tags = fields.Many2many(
+        'crm.tag',
+        'res_company_product_tag_rel',
+        'company_id', 'tag_id',
+        string='Allowed Product Tags',
+        domain="[('tag_type', '=', 'product')]"
+    )
+    allowed_account_tags = fields.Many2many(
+        'crm.tag',
+        'res_company_account_tag_rel',
+        'company_id', 'tag_id',
+        string='Allowed Account Tags',
+        domain="[('tag_type', '=', 'account')]"
+    )

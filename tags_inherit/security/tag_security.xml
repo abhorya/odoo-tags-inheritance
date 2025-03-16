@@ -1,19 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <data>
+        <!-- Global Admin Access -->
+        <record id="rule_global_admin_access" model="ir.rule">
+            <field name="name">Global Admin Access</field>
+            <field name="model_id" ref="base.model_res_users"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="groups" eval="[(4, ref('base.group_system'))]"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_unlink" eval="True"/>
+        </record>
+
+        <!-- Admin Access Rights -->
+        <record id="access_res_users_admin" model="ir.model.access">
+            <field name="name">res.users.admin.access</field>
+            <field name="model_id" ref="base.model_res_users"/>
+            <field name="group_id" ref="base.group_system"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_unlink" eval="True"/>
+        </record>
+
         <!-- Partner Rules -->
         <record id="rule_res_partner_tag_access" model="ir.rule">
             <field name="name">Partner Tag Access</field>
             <field name="model_id" ref="base.model_res_partner"/>
-            <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids), '|', ('company_tag', '=', False), ('company_tag', 'in', user.allowed_customer_tags.ids + user.allowed_vendor_tags.ids)]</field>
+            <field name="domain_force">['|', '|', ('id', '=', user.partner_id.id), ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
             <field name="groups" eval="[(4, ref('base.group_user'))]"/>
         </record>
 
-        <!-- Users Rules - Modified to be less restrictive -->
+        <!-- Users Rules -->
         <record id="rule_res_users_tag_access" model="ir.rule">
             <field name="name">Users Tag Access</field>
             <field name="model_id" ref="base.model_res_users"/>
-            <field name="domain_force">['|', ('id', '=', user.id), '|', ('allowed_customer_tags', '=', False), '|', ('allowed_customer_tags', 'in', user.allowed_customer_tags.ids), '|', ('allowed_vendor_tags', 'in', user.allowed_vendor_tags.ids), ('allowed_product_tags', 'in', user.allowed_product_tags.ids)]</field>
+            <field name="domain_force">['|', ('id', '=', user.id), ('company_id', 'in', company_ids)]</field>
             <field name="groups" eval="[(4, ref('base.group_user'))]"/>
         </record>
 
@@ -21,7 +44,7 @@
         <record id="rule_product_template_tag_access" model="ir.rule">
             <field name="name">Product Tag Access</field>
             <field name="model_id" ref="product.model_product_template"/>
-            <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids), '|', ('company_tag', '=', False), ('company_tag', 'in', user.allowed_product_tags.ids)]</field>
+            <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
             <field name="groups" eval="[(4, ref('base.group_user'))]"/>
         </record>
 
@@ -29,7 +52,7 @@
         <record id="rule_product_tag_access" model="ir.rule">
             <field name="name">Product Tag Access</field>
             <field name="model_id" ref="product.model_product_tag"/>
-            <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids), ('crm_tag_id', 'in', user.allowed_product_tags.ids)]</field>
+            <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
             <field name="groups" eval="[(4, ref('base.group_user'))]"/>
             <field name="perm_read" eval="True"/>
             <field name="perm_write" eval="True"/>
@@ -41,32 +64,8 @@
         <record id="rule_account_tag_access" model="ir.rule">
             <field name="name">Account Tag Access</field>
             <field name="model_id" ref="account.model_account_account_tag"/>
-            <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids), '|', ('crm_tag_id', '=', False), ('crm_tag_id', 'in', user.allowed_account_tags.ids)]</field>
+            <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
             <field name="groups" eval="[(4, ref('base.group_user'))]"/>
-            <field name="perm_read" eval="True"/>
-            <field name="perm_write" eval="True"/>
-            <field name="perm_create" eval="True"/>
-            <field name="perm_unlink" eval="True"/>
-        </record>
-
-        <!-- Global Rule for Admins -->
-        <record id="rule_product_tag_admin_access" model="ir.rule">
-            <field name="name">Product Tag Admin Access</field>
-            <field name="model_id" ref="product.model_product_tag"/>
-            <field name="domain_force">[(1, '=', 1)]</field>
-            <field name="groups" eval="[(4, ref('base.group_system'))]"/>
-            <field name="perm_read" eval="True"/>
-            <field name="perm_write" eval="True"/>
-            <field name="perm_create" eval="True"/>
-            <field name="perm_unlink" eval="True"/>
-        </record>
-
-        <!-- Global Rule for Admins for Account Tags -->
-        <record id="rule_account_tag_admin_access" model="ir.rule">
-            <field name="name">Account Tag Admin Access</field>
-            <field name="model_id" ref="account.model_account_account_tag"/>
-            <field name="domain_force">[(1, '=', 1)]</field>
-            <field name="groups" eval="[(4, ref('base.group_system'))]"/>
             <field name="perm_read" eval="True"/>
             <field name="perm_write" eval="True"/>
             <field name="perm_create" eval="True"/>

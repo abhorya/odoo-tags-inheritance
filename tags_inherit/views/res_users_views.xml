@@ -55,4 +55,21 @@
             </search>
         </field>
     </record>
+
+    <!-- Inherit Users List View -->
+    <record id="view_users_tree_inherit_tags" model="ir.ui.view">
+        <field name="name">res.users.tree.inherit.tags</field>
+        <field name="model">res.users</field>
+        <field name="inherit_id" ref="base.view_users_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//list" position="attributes">
+                <attribute name="editable">bottom</attribute>
+            </xpath>
+            <xpath expr="//field[@name='login']" position="after">
+                <field name="allowed_customer_tags" widget="many2many_tags" options="{'color_field': 'color'}" string="Customer Tags"/>
+                <field name="allowed_vendor_tags" widget="many2many_tags" options="{'color_field': 'color'}" string="Vendor Tags"/>
+                <field name="allowed_product_tags" widget="many2many_tags" options="{'color_field': 'color'}" string="Product Tags"/>
+            </xpath>
+        </field>
+    </record>
 </odoo>
